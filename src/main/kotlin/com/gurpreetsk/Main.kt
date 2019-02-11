@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
     val androidStringBuilder = getAndroidStrings(keyValueMap)
     val iOSStringBuilder     = getiOSStrings(keyValueMap)
 
-    val destinationDirectory = "$homeDirectory/Desktop/KiteTabStrings" // TODO(gs) - Configurable directory.
+    val destinationDirectory = "$homeDirectory/Desktop/KiteTabStrings"
     FileWriter()
         .apply {
             val parentDirectory = createParentDirectory(destinationDirectory)
