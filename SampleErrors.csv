@@ -1,5 +1,6 @@
-Hello1, 123
-Hello2, 123
-Hello3, 123
-Hello4, 123
-Hello5, 123
+Hello1, Hello
+Hello2, Hi
+Hello3, Yo!
+Hello4, Howdy Yo
+Hello5, Hey pal
+template_sample, <some random contexual text> should replace this.
