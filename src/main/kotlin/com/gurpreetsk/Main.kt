@@ -1,5 +1,7 @@
 package com.gurpreetsk
 
+//ENTRY com.gurpreetsk.MainKt
+
 import com.gurpreetsk.internal.FilePath
 import com.gurpreetsk.internal.Utils.getAndroidStrings
 import com.gurpreetsk.internal.Utils.getiOSStrings
