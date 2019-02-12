@@ -6,17 +6,17 @@ import com.gurpreetsk.internal.Utils.getiOSStrings
 
 fun main(args: Array<String>) {
     val homeDirectory = System.getenv("HOME")
-    val keyValueMap   = CsvReader(FilePath("$homeDirectory/Downloads/KiteTabErrors.csv")).parseCsv()
+    val keyValueMap   = CsvReader(FilePath("$homeDirectory/Downloads/errors.csv")).parseCsv()
 
     val androidStringBuilder = getAndroidStrings(keyValueMap)
     val iOSStringBuilder     = getiOSStrings(keyValueMap)
 
-    val destinationDirectory = "$homeDirectory/Desktop/KiteTabStrings"
+    val destinationDirectory = "$homeDirectory/Desktop/StringerThings"
     FileWriter()
         .apply {
             val parentDirectory = createParentDirectory(destinationDirectory)
             createAndroidStringsFile(parentDirectory, androidStringBuilder.toString())
             createiOSStringsFile(parentDirectory, iOSStringBuilder.toString())
         }
-        .also { println("Bravo! Files generated successfully at \"$destinationDirectory\".") }
+        .also { println("Suucess! Files generated in directory \"$destinationDirectory\".") }
 }
