@@ -5,13 +5,18 @@ package com.gurpreetsk
 import java.io.File
 
 fun main(args: Array<String>) {
+    if (args.isEmpty()) {
+        println("No CSV file path provided.")
+        return
+    }
+
     val homeDirectory = System.getenv("HOME")
-    val keyValueMap   = parseCsv(FilePath("$homeDirectory/Downloads/KiteTabErrors.csv"))
+    val keyValueMap   = parseCsv(FilePath(args[0]))
 
     val androidStringBuilder = getAndroidStrings(keyValueMap)
     val iOSStringBuilder     = getiOSStrings(keyValueMap)
 
-    val destinationDirectory = "$homeDirectory/Desktop/KiteTabStrings"
+    val destinationDirectory = "StringerThings"
     val parentDirectory = createParentDirectory(destinationDirectory)
     createAndroidStringsFile(parentDirectory, androidStringBuilder.toString())
     createiOSStringsFile(parentDirectory, iOSStringBuilder.toString())
