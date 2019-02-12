@@ -20,8 +20,9 @@ fun main(args: Array<String>) {
     val parentDirectory = createParentDirectory(destinationDirectory)
     createAndroidStringsFile(parentDirectory, androidStringBuilder.toString())
     createiOSStringsFile(parentDirectory, iOSStringBuilder.toString())
-    println("Bravo! Files generated successfully at \"$destinationDirectory\".")
+    println("Success! Files generated in directory \"$destinationDirectory\".\n")
 }
+
 
 
 /* -------- CSV Parsing -------- */
@@ -46,12 +47,18 @@ private fun readFileContents(
     file.useLines { sequence ->
         sequence.iterator().forEach { line ->
             val keyValuePairs = line.split(",")
-            map[ResourceKey(keyValuePairs[0])] = ResourceValue(keyValuePairs[1])
+            map[ResourceKey(keyValuePairs[0])] = ResourceValue(keyValuePairs[1].convertToAndroidTemplate())
         }
     }
 
     return map.toMap()
 }
+
+private fun String.convertToAndroidTemplate(): String {
+    val regex = "<(.*?)>".toRegex()
+    return this.replace(regex, "%s")
+}
+
 
 
 /* -------- File Helpers -------- */
@@ -89,12 +96,13 @@ fun getAndroidStrings(
 private fun getAndroidStringResource(
     key: ResourceKey,
     value: ResourceValue
-): String = "  <string name=\"${key.key.trim()}\">\"${value.value.trim().replace(" ", "_")}\"</string>\n"
+): String = "  <string name=\"${key.key.trim().replace(" ", "_")}\">${value.value.trim()}</string>\n"
 
 private fun getiOSStringResource(
     key: ResourceKey,
     value: ResourceValue
-): String = "${key.key}=${value.value}\n"
+): String = "${key.key.replace(" ", "_")}=${value.value.trim().replace("%s", "%@")}\n"
+
 
 
 /* -------- Inline classes for type safety -------- */

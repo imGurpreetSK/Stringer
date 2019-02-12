@@ -27,10 +27,15 @@ class CsvReader(private val path: FilePath) {
         file.useLines { sequence ->
             sequence.iterator().forEach { line ->
                 val keyValuePairs = line.split(",")
-                map[ResourceKey(keyValuePairs[0])] = ResourceValue(keyValuePairs[1])
+                map[ResourceKey(keyValuePairs[0])] = ResourceValue(keyValuePairs[1].convertToAndroidTemplate())
             }
         }
 
         return map.toMap()
     }
+}
+
+private fun String.convertToAndroidTemplate(): String {
+    val regex = "<(.*?)>".toRegex()
+    return this.replace(regex, "%s")
 }
