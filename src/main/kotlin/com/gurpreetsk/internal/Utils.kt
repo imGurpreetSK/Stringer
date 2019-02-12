@@ -21,10 +21,10 @@ object Utils {
     private fun getAndroidStringResource(
         key: ResourceKey,
         value: ResourceValue
-    ): String = "  <string name=\"${key.key.trim()}\">\"${value.value.trim().replace(" ", "_")}\"</string>\n"
+    ): String = "  <string name=\"${key.key.trim().replace(" ", "_")}\">\"${value.value.trim()}\"</string>\n"
 
     private fun getiOSStringResource(
         key: ResourceKey,
         value: ResourceValue
-    ): String = "${key.key}=${value.value}\n"
+    ): String = "${key.key.replace(" ", "_")}=${value.value.trim().replace("%s", "%@")}\n"
 }
