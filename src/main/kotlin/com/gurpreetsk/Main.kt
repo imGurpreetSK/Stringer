@@ -18,5 +18,5 @@ fun main(args: Array<String>) {
             createAndroidStringsFile(parentDirectory, androidStringBuilder.toString())
             createiOSStringsFile(parentDirectory, iOSStringBuilder.toString())
         }
-        .also { println("Suucess! Files generated in directory \"$destinationDirectory\".") }
+        .also { println("Success! Files generated in directory \"$destinationDirectory\".") }
 }
