@@ -2,29 +2,36 @@ package com.gurpreetsk.internal
 
 object Utils {
     fun getiOSStrings(
-        keyValueMap: Map<ResourceKey, ResourceValue>
+        lines: Set<Line>
     ): StringBuilder {
         return StringBuilder()
-            .apply {
-                keyValueMap.forEach { key, value -> append(getiOSStringResource(key, value)) }
-            }
+            .apply { lines.forEach { line -> append(getiOSStringResource(line)) } }
     }
 
     fun getAndroidStrings(
-        keyValueMap: Map<ResourceKey, ResourceValue>
+        lines: Set<Line>
     ): StringBuilder = StringBuilder().apply {
         append("<resources>\n")
-        keyValueMap.forEach { key, value -> append(getAndroidStringResource(key, value)) }
+        lines.forEach { line -> append(getAndroidStringResource(line)) }
         return append("</resources>\n")
     }
 
     private fun getAndroidStringResource(
-        key: ResourceKey,
-        value: ResourceValue
-    ): String = "  <string name=\"${key.key.trim().toLowerCase().replace(" ", "_")}\">\"${value.value.trim()}\"</string>\n"
+        line: Line
+    ): String {
+        val indentSpaces = "  "
+        return when (line) {
+            is Comment  -> "\n$indentSpaces<!-- ${line.text.substring(1).trim()} -->\n"
+            is Resource -> "$indentSpaces<string name=\"${line.key.text.trim().toLowerCase().replace(" ", "_")}\">\"${line.value.text.trim()}\"</string>\n"
+        }
+    }
 
     private fun getiOSStringResource(
-        key: ResourceKey,
-        value: ResourceValue
-    ): String = "\"${key.key.trim().toLowerCase().replace(" ", "_")}\" = \"${value.value.trim().replace("%s", "%@")}\";\n"
+        line: Line
+    ): String {
+        return when (line) {
+            is Comment  -> "\n// ${line.text.substring(1).trim()}\n"
+            is Resource -> "\"${line.key.text.trim().toLowerCase().replace(" ", "_")}\" = \"${line.value.text.trim().replace("%s", "%@")}\";\n"
+        }
+    }
 }

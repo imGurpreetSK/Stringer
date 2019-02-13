@@ -1,12 +1,15 @@
 package com.gurpreetsk
 
+import com.gurpreetsk.internal.Comment
 import com.gurpreetsk.internal.FilePath
+import com.gurpreetsk.internal.Line
+import com.gurpreetsk.internal.Resource
 import com.gurpreetsk.internal.ResourceKey
 import com.gurpreetsk.internal.ResourceValue
 import java.io.File
 
 class CsvReader(private val path: FilePath) {
-    fun parseCsv(): Map<ResourceKey, ResourceValue> {
+    fun parseCsv(): Set<Line> {
         val file = getReadableFile()
         return if (file.canRead()) {
             readFileContents(file)
@@ -22,20 +25,24 @@ class CsvReader(private val path: FilePath) {
 
     private fun readFileContents(
         file: File
-    ): Map<ResourceKey, ResourceValue> {
-        val map = mutableMapOf<ResourceKey, ResourceValue>()
+    ): Set<Line> {
+        val set = linkedSetOf<Line>()
         file.useLines { sequence ->
             sequence.iterator().forEach { line ->
-                val keyValuePairs = line.split(",")
-                map[ResourceKey(keyValuePairs[0])] = ResourceValue(keyValuePairs[1].convertToAndroidTemplate())
+                if (line.startsWith("#")) {
+                    set.add(Comment(line))
+                } else {
+                    val keyValuePairs = line.split(",")
+                    set.add(Resource(ResourceKey(keyValuePairs[0]), ResourceValue(keyValuePairs[0].convertToAndroidTemplate())))
+                }
             }
         }
 
-        return map.toMap()
+        return set.toSet()
     }
-}
 
-private fun String.convertToAndroidTemplate(): String {
-    val regex = "<(.*?)>".toRegex()
-    return this.replace(regex, "%s")
+    private fun String.convertToAndroidTemplate(): String {
+        val regex = "<(.*?)>".toRegex()
+        return this.replace(regex, "%s")
+    }
 }

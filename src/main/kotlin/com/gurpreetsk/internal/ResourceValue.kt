@@ -1,3 +1,3 @@
 package com.gurpreetsk.internal
 
-inline class ResourceValue(val value: String)
+inline class ResourceValue(val text: String)

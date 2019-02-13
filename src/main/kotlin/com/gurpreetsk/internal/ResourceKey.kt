@@ -1,3 +1,3 @@
 package com.gurpreetsk.internal
 
-inline class ResourceKey(val key: String)
+inline class ResourceKey(val text: String)
