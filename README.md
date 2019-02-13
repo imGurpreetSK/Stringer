@@ -20,3 +20,4 @@ See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/SampleErro
 
 1. Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
 2. Any line starting with `#` is treated as comment.
+3. A `type` can be provided and resource key is generated accordingly for them. Eg: The generated key for `no connection, No internet connection found, ERROR` will be `error_no_connection`.

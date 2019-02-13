@@ -1,7 +1,8 @@
-Hello1, Hello
-Hello2, Hi
+# KEY, VALUE, TYPE
+Hello1, Hello, ERROR
+Hello2, Hi, ERROR
 Hello3, Yo!
-Hello4, Howdy Yo
+Hello4, Howdy Yo, TEMPLATE
 Hello5, Hey pal
 
 # This is a comment
