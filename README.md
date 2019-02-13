@@ -5,7 +5,7 @@
 #### Working
 Run `kscript Program.kt <Name of your csv file>.csv`. Files will be generated in the same directory.
 
-See [Kscript](https://github.com/holgerbrandl/kscript) for installation and more.
+See [kscript](https://github.com/holgerbrandl/kscript) for installation and more.
 
 
 *OR*
@@ -18,11 +18,5 @@ See [Kscript](https://github.com/holgerbrandl/kscript) for installation and more
 #### CSV format
 See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/SampleErrors.csv).
 
-Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
-
-
-#### TODOs
-1. :heavy_check_mark: ~Convert to a kotlin script which can be run from terminal.~ Try fixing compilation errors and running main() using kscript.
-2. Configurable source file path and destination folder.
-3. Write missing tests - no TDD followed.
-4. Steps to run without kscript (?)
+1. Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
+2. Any line starting with `#` is treated as comment.

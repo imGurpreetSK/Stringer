@@ -3,4 +3,6 @@ Hello2, Hi
 Hello3, Yo!
 Hello4, Howdy Yo
 Hello5, Hey pal
-template_sample, <some random contexual text> should replace this.
+
+# This is a comment
+template_sample, <some random contextual text> should replace this.
