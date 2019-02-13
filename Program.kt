@@ -96,12 +96,12 @@ fun getAndroidStrings(
 private fun getAndroidStringResource(
     key: ResourceKey,
     value: ResourceValue
-): String = "  <string name=\"${key.key.trim().replace(" ", "_")}\">${value.value.trim()}</string>\n"
+): String = "  <string name=\"${key.key.trim().toLowerCase().replace(" ", "_")}\">${value.value.trim()}</string>\n"
 
 private fun getiOSStringResource(
     key: ResourceKey,
     value: ResourceValue
-): String = "${key.key.replace(" ", "_")}=${value.value.trim().replace("%s", "%@")}\n"
+): String = "\"${key.key.trim().toLowerCase().replace(" ", "_")}\" = \"${value.value.trim().replace("%s", "%@")}\";\n"
 
 
 
