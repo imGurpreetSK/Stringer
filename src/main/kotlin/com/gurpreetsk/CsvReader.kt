@@ -5,6 +5,7 @@ import com.gurpreetsk.internal.FilePath
 import com.gurpreetsk.internal.Line
 import com.gurpreetsk.internal.Resource
 import com.gurpreetsk.internal.ResourceKey
+import com.gurpreetsk.internal.ResourceType
 import com.gurpreetsk.internal.ResourceValue
 import java.io.File
 
@@ -32,8 +33,11 @@ class CsvReader(private val path: FilePath) {
                 if (line.startsWith("#")) {
                     set.add(Comment(line))
                 } else {
-                    val keyValuePairs = line.split(",")
-                    set.add(Resource(ResourceKey(keyValuePairs[0]), ResourceValue(keyValuePairs[0].convertToAndroidTemplate())))
+                    val splitLine = line.split(",")
+                    val key   = ResourceKey(splitLine[0])
+                    val value = ResourceValue(splitLine[1].convertToAndroidTemplate())
+                    val type  = try { ResourceType(splitLine[2]) } catch (e: Exception) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
+                    set.add(Resource(key, value, type))
                 }
             }
         }
