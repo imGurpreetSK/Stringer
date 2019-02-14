@@ -43,9 +43,9 @@ class CsvReader(private val path: FilePath) {
     private fun getResourceKey(splitLine: List<String>): ResourceKey {
         val resourceText = splitLine[0].cleaned()
         val type         = try { splitLine[2].cleaned() } catch (e: IndexOutOfBoundsException) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
-        val feature      = try { splitLine[3].cleaned("") } catch (e: IndexOutOfBoundsException) { null }
+        val feature      = try { splitLine[3].cleaned() } catch (e: IndexOutOfBoundsException) { null }
 
-        // Generate key of pattern "type_feature_name_text", eg: error_resourcedetails_connection
+        // Generate key of pattern "type_feature_name_text", eg: error_resource_details_connection
         val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
         return ResourceKey(key)
     }

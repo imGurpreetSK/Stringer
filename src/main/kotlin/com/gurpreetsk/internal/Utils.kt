@@ -37,5 +37,5 @@ object Utils {
 
 }
 
-fun String.cleaned(emptySpaceReplacement: String = "_"): String =
-    this.trim().toLowerCase().replace(" ", emptySpaceReplacement)
+fun String.cleaned(): String =
+    this.trim().toLowerCase().replace(" ", "_")
