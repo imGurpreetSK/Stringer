@@ -10,13 +10,13 @@ See [kscript](https://github.com/holgerbrandl/kscript) for installation and more
 
 *OR*
 
-1. Create the csv named `errors.csv` and place it in `$homeDirectory/Downloads`. The resulting file path should be `$homeDirectory/Downloads/errors.csv`.
+1. Create the csv named `strings.csv` and place it in `$homeDirectory/Downloads`. The resulting file path should be `$homeDirectory/Downloads/strings.csv`.
 2. Execute [`main()`](https://github.com/GurpreetSK95/Stringer/blob/master/src/main/kotlin/com/gurpreetsk/Main.kt) function.
 3. The generated files are located in `$homeDirectory/Desktop/StringerThings` directory.
 
 
-#### CSV format
-See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/SampleErrors.csv).
+#### Features
+See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/strings.csv) for format.
 
 1. Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
 2. Any line starting with `#` is treated as comment.

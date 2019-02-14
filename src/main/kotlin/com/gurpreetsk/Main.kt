@@ -8,7 +8,7 @@ import com.gurpreetsk.internal.Utils.getiOSStrings
 
 fun main(args: Array<String>) {
     val homeDirectory = System.getenv("HOME")
-    val fileByLines   = CsvReader(FilePath("$homeDirectory/Downloads/errors.csv")).parseCsv()
+    val fileByLines   = CsvReader(FilePath("$homeDirectory/Downloads/strings.csv")).parseCsv()
 
     val androidStringBuilder = getAndroidStrings(fileByLines)
     val iOSStringBuilder     = getiOSStrings(fileByLines)
