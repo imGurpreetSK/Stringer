@@ -3,7 +3,7 @@
 
 
 #### Working
-Run `kscript Program.kt <Name of your csv file>.csv`. Files will be generated in the same directory.
+Run `kscript stringer.kt <Name of your csv file>.csv`. Files will be generated in the same directory.
 
 See [kscript](https://github.com/holgerbrandl/kscript) for installation and more.
 
