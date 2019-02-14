@@ -1,12 +1,6 @@
 package com.gurpreetsk
 
-import com.gurpreetsk.internal.Comment
-import com.gurpreetsk.internal.FilePath
-import com.gurpreetsk.internal.Line
-import com.gurpreetsk.internal.Resource
-import com.gurpreetsk.internal.ResourceKey
-import com.gurpreetsk.internal.ResourceType
-import com.gurpreetsk.internal.ResourceValue
+import com.gurpreetsk.internal.*
 import java.io.File
 
 class CsvReader(private val path: FilePath) {
@@ -30,19 +24,30 @@ class CsvReader(private val path: FilePath) {
         val set = linkedSetOf<Line>()
         file.useLines { sequence ->
             sequence.iterator().forEach { line ->
-                if (line.startsWith("#")) {
-                    set.add(Comment(line))
-                } else {
-                    val splitLine = line.split(",")
-                    val key   = ResourceKey(splitLine[0])
-                    val value = ResourceValue(splitLine[1].convertToAndroidTemplate())
-                    val type  = try { ResourceType(splitLine[2]) } catch (e: Exception) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
-                    set.add(Resource(key, value, type))
+                if (!line.isBlank()) {
+                    if (line.startsWith("#")) {
+                        set.add(Comment(line))
+                    } else {
+                        val splitLine = line.split(",")
+                        val key = getResourceKey(splitLine)
+                        val value = ResourceValue(splitLine[1].convertToAndroidTemplate())
+                        set.add(Resource(key, value))
+                    }
                 }
             }
         }
 
         return set.toSet()
+    }
+
+    private fun getResourceKey(splitLine: List<String>): ResourceKey {
+        val resourceText = splitLine[0].cleaned()
+        val type         = try { splitLine[2].cleaned() } catch (e: IndexOutOfBoundsException) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
+        val feature      = try { splitLine[3].cleaned("") } catch (e: IndexOutOfBoundsException) { null }
+
+        // Generate key of pattern "type_feature_name_text", eg: error_resourcedetails_connection
+        val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
+        return ResourceKey(key)
     }
 
     private fun String.convertToAndroidTemplate(): String {
