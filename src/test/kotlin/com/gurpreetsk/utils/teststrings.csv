@@ -1,9 +1,3 @@
-# KEY, VALUE, TYPE
 Hello1, Hello, ERROR
-Hello2, Hi, ERROR
-no connection, Not connected to Internet, ERROR, actor details
-Hello4, Howdy Yo, TEMPLATE
-Hello5, Hey pal
-
-# This is a comment
-template_sample, <some random contextual text> should replace this.
+Hello2, Hi
+Hello3, Hi <username>, TEMPLATE

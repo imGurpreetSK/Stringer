@@ -29,8 +29,8 @@ class CsvReader(private val path: FilePath) {
                         set.add(Comment(line))
                     } else {
                         val splitLine = line.split(",")
-                        val key = getResourceKey(splitLine)
-                        val value = ResourceValue(splitLine[1].convertToAndroidTemplate())
+                        val key   = getResourceKey(splitLine)
+                        val value = ResourceValue(splitLine[1].trim())
                         set.add(Resource(key, value))
                     }
                 }
@@ -48,10 +48,5 @@ class CsvReader(private val path: FilePath) {
         // Generate key of pattern "type_feature_name_text", eg: error_resource_details_connection
         val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
         return ResourceKey(key)
-    }
-
-    private fun String.convertToAndroidTemplate(): String {
-        val regex = "<(.*?)>".toRegex()
-        return this.replace(regex, "%s")
     }
 }
