@@ -22,7 +22,7 @@ object Utils {
         val indentLevelInSpaces = "  "
         return when (line) {
             is Comment  -> "\n$indentLevelInSpaces<!-- ${line.text.substring(1).trim()} -->\n"
-            is Resource -> "$indentLevelInSpaces<string name=\"${line.key.text.cleaned()}\">\"${line.value.text.trim().convertToAndroidTemplate()}\"</string>\n"
+            is Resource -> "$indentLevelInSpaces<string name=\"${line.key.text.clean()}\">\"${line.value.text.trim().convertToAndroidTemplate()}\"</string>\n"
         }
     }
 
@@ -31,7 +31,7 @@ object Utils {
     ): String {
         return when (line) {
             is Comment  -> "\n// ${line.text.substring(1).trim()}\n"
-            is Resource -> "\"${line.key.text.cleaned()}\" = \"${line.value.text.trim().convertToiOSTemplate()}\";\n"
+            is Resource -> "\"${line.key.text.clean()}\" = \"${line.value.text.trim().convertToiOSTemplate()}\";\n"
         }
     }
 
@@ -46,5 +46,4 @@ object Utils {
     }
 }
 
-fun String.cleaned(): String =
-    this.trim().toLowerCase().replace(" ", "_")
+fun String.clean(): String = this.trim().toLowerCase().replace(" ", "_")

@@ -30,7 +30,7 @@ class CsvReader(private val path: FilePath) {
                     } else {
                         val splitLine = line.split(",")
                         val key   = getResourceKey(splitLine)
-                        val value = ResourceValue(splitLine[1].trim())
+                        val value = ResourceValue(splitLine[1].trim().removeBoundaryQuotes().escapeInternalQuotes())
                         set.add(Resource(key, value))
                     }
                 }
@@ -41,12 +41,27 @@ class CsvReader(private val path: FilePath) {
     }
 
     private fun getResourceKey(splitLine: List<String>): ResourceKey {
-        val resourceText = splitLine[0].cleaned()
-        val type         = try { splitLine[2].cleaned() } catch (e: IndexOutOfBoundsException) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
-        val feature      = try { splitLine[3].cleaned() } catch (e: IndexOutOfBoundsException) { null }
+        val resourceText = splitLine[0].clean()
+        val type         = try { splitLine[2].clean() } catch (e: IndexOutOfBoundsException) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
+        val feature      = try { splitLine[3].clean() } catch (e: IndexOutOfBoundsException) { null }
 
         // Generate key of pattern "type_feature_name_text", eg: error_resource_details_connection
         val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
         return ResourceKey(key)
     }
+
+    private fun String.removeBoundaryQuotes(): String {
+        // Remove quotes at start
+        if (this[0] == '\"' || this[0] == '\'') {
+            val first = this.substring(1)
+            // Remove quotes at end
+            if (first.isNotBlank() && (first.last() == '\"' || first.last() == '\'')) {
+                return first.substring(0, first.lastIndex)
+            }
+            return first
+        }
+        return this
+    }
+
+    private fun String.escapeInternalQuotes(): String = this.replace("\"", "\\\"")
 }
