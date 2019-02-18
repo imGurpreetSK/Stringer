@@ -2,3 +2,4 @@
 /.gradle
 /out
 /StringerThings
+/src/test/kotlin/com/gurpreetsk/utils/parent
