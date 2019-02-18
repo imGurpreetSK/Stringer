@@ -54,8 +54,8 @@ class CsvReader(private val path: FilePath) {
                         set.add(Comment(line))
                     } else {
                         val splitLine = line.split(",")
-                        val key = getResourceKey(splitLine)
-                        val value = ResourceValue(splitLine[1].convertToAndroidTemplate())
+                        val key   = getResourceKey(splitLine)
+                        val value = ResourceValue(splitLine[1].trim())
                         set.add(Resource(key, value))
                     }
                 }
@@ -74,11 +74,6 @@ class CsvReader(private val path: FilePath) {
         val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
         return ResourceKey(key)
     }
-
-    private fun String.convertToAndroidTemplate(): String {
-        val regex = "<(.*?)>".toRegex()
-        return this.replace(regex, "%s")
-    }
 }
 
 /* ------- File helpers ------- */
@@ -90,13 +85,11 @@ class FileWriter {
     fun createAndroidStringsFile(parentDirectory: File, contents: String) {
         val androidStrings = File(parentDirectory, "strings.xml")
         androidStrings.writeText(contents)
-        androidStrings.appendText("\n") // End file with a new line.
     }
 
     fun createiOSStringsFile(parentDirectory: File, contents: String) {
         val iOSStrings = File(parentDirectory, "localizable.strings")
         iOSStrings.writeText(contents)
-        iOSStrings.appendText("\n") // End file with a new line.
     }
 }
 
@@ -120,10 +113,10 @@ object Utils {
     private fun getAndroidStringResource(
         line: Line
     ): String {
-        val indentSpaces = "  "
+        val indentLevelInSpaces = "  "
         return when (line) {
-            is Comment  -> "\n$indentSpaces<!-- ${line.text.substring(1).trim()} -->\n"
-            is Resource -> "$indentSpaces<string name=\"${line.key.text.cleaned()}\">\"${line.value.text.trim()}\"</string>\n"
+            is Comment  -> "\n$indentLevelInSpaces<!-- ${line.text.substring(1).trim()} -->\n"
+            is Resource -> "$indentLevelInSpaces<string name=\"${line.key.text.cleaned()}\">\"${line.value.text.trim().convertToAndroidTemplate()}\"</string>\n"
         }
     }
 
@@ -132,10 +125,19 @@ object Utils {
     ): String {
         return when (line) {
             is Comment  -> "\n// ${line.text.substring(1).trim()}\n"
-            is Resource -> "\"${line.key.text.cleaned()}\" = \"${line.value.text.trim().replace("%s", "%@")}\";\n"
+            is Resource -> "\"${line.key.text.cleaned()}\" = \"${line.value.text.trim().convertToiOSTemplate()}\";\n"
         }
     }
 
+    private fun String.convertToAndroidTemplate(): String {
+        val regex = "<(.*?)>".toRegex()
+        return this.replace(regex, "%s")
+    }
+
+    private fun String.convertToiOSTemplate(): String {
+        val regex = "<(.*?)>".toRegex()
+        return this.replace(regex, "%@")
+    }
 }
 
 private fun String.cleaned(): String =
