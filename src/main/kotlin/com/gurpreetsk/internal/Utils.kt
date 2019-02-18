@@ -19,10 +19,10 @@ object Utils {
     private fun getAndroidStringResource(
         line: Line
     ): String {
-        val indentSpaces = "  "
+        val indentLevelInSpaces = "  "
         return when (line) {
-            is Comment  -> "\n$indentSpaces<!-- ${line.text.substring(1).trim()} -->\n"
-            is Resource -> "$indentSpaces<string name=\"${line.key.text.cleaned()}\">\"${line.value.text.trim()}\"</string>\n"
+            is Comment  -> "\n$indentLevelInSpaces<!-- ${line.text.substring(1).trim()} -->\n"
+            is Resource -> "$indentLevelInSpaces<string name=\"${line.key.text.cleaned()}\">\"${line.value.text.trim().convertToAndroidTemplate()}\"</string>\n"
         }
     }
 
@@ -31,10 +31,19 @@ object Utils {
     ): String {
         return when (line) {
             is Comment  -> "\n// ${line.text.substring(1).trim()}\n"
-            is Resource -> "\"${line.key.text.cleaned()}\" = \"${line.value.text.trim().replace("%s", "%@")}\";\n"
+            is Resource -> "\"${line.key.text.cleaned()}\" = \"${line.value.text.trim().convertToiOSTemplate()}\";\n"
         }
     }
 
+    private fun String.convertToAndroidTemplate(): String {
+        val regex = "<(.*?)>".toRegex()
+        return this.replace(regex, "%s")
+    }
+
+    private fun String.convertToiOSTemplate(): String {
+        val regex = "<(.*?)>".toRegex()
+        return this.replace(regex, "%@")
+    }
 }
 
 fun String.cleaned(): String =
