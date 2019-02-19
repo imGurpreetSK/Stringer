@@ -20,4 +20,6 @@ See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/strings.cs
 
 1. Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
 2. Any line starting with `#` is treated as comment.
-3. A `type` and `feature` can be provided and resource key is generated accordingly for them. Eg: The generated key for `no connection, No internet connection found, ERROR` will be `error_no_connection`.
+3. A `type` and `feature` can be provided and resource key is generated accordingly for them. Eg: The generated key for `no connection, No internet connection found, ERROR, user details` will be `error_user_details_no_connection`.
+
+<b>Note</b>: Ordering matters. CSVs must be ordered as `KEY, VALUE, TYPE (optional), FEATURE NAME (optional)`
