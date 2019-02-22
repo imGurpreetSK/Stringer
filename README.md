@@ -2,21 +2,25 @@
 <h3 align="center">Create localised string files for Android and iOS from a single CSV file.</h3>
 
 
-#### Working
-Run `kscript stringer.kt <Name of your csv file>.csv`. Files will be generated in the same directory.
+#### Why?
+As an application grows, maintaining the same product communication gets harder on multiple platforms. Stringer solves this problem by generating platform specific string files from a common CSV file.
+Currently, the generated files include `strings.xml` for Android and `localizable.strings` for iOS.
 
-See [kscript](https://github.com/holgerbrandl/kscript) for installation and more.
+#### Working
+Run `kscript stringer.kt <Path to your csv file>.csv`. Files will be generated in a directory named `StringerThings` on the same path.
+
+See [kscript](https://github.com/holgerbrandl/kscript) for installation and more information.
 
 
 *OR*
 
-1. Create the csv named `strings.csv` and place it in `$homeDirectory/Downloads`. The resulting file path should be `$homeDirectory/Downloads/strings.csv`.
+1. Create the csv named `mobile-strings.csv` and place it in `$homeDirectory/Downloads`. The resulting file path should be `$homeDirectory/Downloads/strings.csv` (default path of a downloaded file).
 2. Execute [`main()`](https://github.com/GurpreetSK95/Stringer/blob/master/src/main/kotlin/com/gurpreetsk/Main.kt) function.
 3. The generated files are located in `$homeDirectory/Desktop/StringerThings` directory.
 
 
 #### Features
-See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/strings.csv) for format.
+See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/mobile-strings.csv) for format.
 
 1. Templating is supported: Any string between `<` and `>` will be replaced with `%s` for Android and `%@` for iOS.
 2. Any line starting with `#` is treated as comment.
