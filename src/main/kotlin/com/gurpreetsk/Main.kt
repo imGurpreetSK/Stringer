@@ -5,6 +5,12 @@ package com.gurpreetsk
 import com.gurpreetsk.internal.FilePath
 import com.gurpreetsk.internal.Utils.getAndroidStrings
 import com.gurpreetsk.internal.Utils.getiOSStrings
+import com.gurpreetsk.writer.AndroidFileWriter
+import com.gurpreetsk.writer.DirectoryManager
+import com.gurpreetsk.writer.IosFileWriter
+
+private val androidFileWriter by lazy { AndroidFileWriter() }
+private val iosFileWriter by lazy { IosFileWriter() }
 
 fun main(args: Array<String>) {
     val homeDirectory = System.getenv("HOME")
@@ -14,11 +20,13 @@ fun main(args: Array<String>) {
     val iOSStringBuilder     = getiOSStrings(fileByLines)
 
     val destinationDirectory = "$homeDirectory/Desktop/StringerThings"
-    FileWriter()
-        .apply {
-            val parentDirectory = createParentDirectory(destinationDirectory)
-            createAndroidStringsFile(parentDirectory, androidStringBuilder.toString())
-            createiOSStringsFile(parentDirectory, iOSStringBuilder.toString())
+    DirectoryManager
+        .createParentDirectory(destinationDirectory)
+        .run {
+            androidFileWriter.write(this, androidStringBuilder.toString())
+            iosFileWriter.write(this, iOSStringBuilder.toString())
         }
-        .also { println("Success! Files generated in directory \"$destinationDirectory\".") }
+        .also {
+            println("Success! Files generated in directory \"$destinationDirectory\".")
+        }
 }
