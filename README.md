@@ -1,6 +1,7 @@
 <h1 align="center">Stringer</h1>
 <h3 align="center">Create localised string files for Android and iOS from a single CSV file.</h3>
 
+[![Android Weekly]( https://img.shields.io/badge/Android%20Weekly-%23352-blue.svg )]( http://androidweekly.net/issues/issue-352 )
 
 #### Why?
 As an application grows, maintaining the same product communication gets harder on multiple platforms. Stringer solves this problem by generating platform specific string files from a common CSV file.
