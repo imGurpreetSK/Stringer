@@ -33,9 +33,9 @@ class CsvReaderTests {
         val csvReader = CsvReader(path)
         assertThat(csvReader.parseCsv())
             .containsExactly(
-                Resource(ResourceKey("error_hello1"), ResourceValue("Hello")),
-                Resource(ResourceKey("hello2"), ResourceValue("Hi")),
-                Resource(ResourceKey("template_hello3"), ResourceValue("Hi <username>"))
+                Resource(ResourceKey("error_hello1"), ResourceEnglishValue("Hello")),
+                Resource(ResourceKey("hello2"), ResourceEnglishValue("Hi")),
+                Resource(ResourceKey("template_hello3"), ResourceEnglishValue("Hi <username>"))
             )
     }
 
@@ -45,12 +45,12 @@ class CsvReaderTests {
         assertThat(csvReader.parseCsv())
             .containsExactly(
                 Comment("# KEY, VALUE, TYPE"),
-                Resource(ResourceKey("error_hello1"), ResourceValue("Hello")),
-                Resource(ResourceKey("hello2"), ResourceValue("Hi")),
-                Resource(ResourceKey("error_actor_details_no_connection"), ResourceValue("Not connected to Internet")),
-                Resource(ResourceKey("template_hello4"), ResourceValue("Howdy Yo")),
+                Resource(ResourceKey("error_hello1"), ResourceEnglishValue("Hello")),
+                Resource(ResourceKey("hello2"), ResourceEnglishValue("Hi")),
+                Resource(ResourceKey("error_actor_details_no_connection"), ResourceEnglishValue("Not connected to Internet")),
+                Resource(ResourceKey("template_hello4"), ResourceEnglishValue("Howdy Yo")),
                 Comment("# This is a comment"),
-                Resource(ResourceKey("template_sample"), ResourceValue("<some random contextual text> should replace this."))
+                Resource(ResourceKey("template_sample"), ResourceEnglishValue("<some random contextual text> should replace this."))
             )
     }
 
@@ -59,13 +59,13 @@ class CsvReaderTests {
         val csvReader = CsvReader(path)
         assertThat(csvReader.parseCsv())
             .containsExactly(
-                Resource(ResourceKey("error_hello1"), ResourceValue("Hello")),
-                Resource(ResourceKey("hello2"), ResourceValue("Hi")),
-                Resource(ResourceKey("error_actor_details_no_connection"), ResourceValue("Not connected to Internet")),
+                Resource(ResourceKey("error_hello1"), ResourceEnglishValue("Hello")),
+                Resource(ResourceKey("hello2"), ResourceEnglishValue("Hi")),
+                Resource(ResourceKey("error_actor_details_no_connection"), ResourceEnglishValue("Not connected to Internet")),
                 Comment("# This is a comment"),
-                Resource(ResourceKey("template_sample"), ResourceValue("<some random contextual text> should replace this.")),
-                Resource(ResourceKey("sample_with_quotes"), ResourceValue("hello \\\"stranger\\\"")),
-                Resource(ResourceKey("sample_with_quotes_2"), ResourceValue("hello stranger"))
+                Resource(ResourceKey("template_sample"), ResourceEnglishValue("<some random contextual text> should replace this.")),
+                Resource(ResourceKey("sample_with_quotes"), ResourceEnglishValue("hello \\\"stranger\\\"")),
+                Resource(ResourceKey("sample_with_quotes_2"), ResourceEnglishValue("hello stranger"))
             )
     }
 
@@ -74,13 +74,13 @@ class CsvReaderTests {
         val csvReader = CsvReader(path)
         assertThat(csvReader.parseCsv())
             .containsExactly(
-                Resource(ResourceKey("error_hello1"), ResourceValue("Hello")),
-                Resource(ResourceKey("hello2"), ResourceValue("Hi")),
-                Resource(ResourceKey("error_actor_details_no_connection"), ResourceValue("Not connected to Internet")),
+                Resource(ResourceKey("error_hello1"), ResourceEnglishValue("Hello")),
+                Resource(ResourceKey("hello2"), ResourceEnglishValue("Hi")),
+                Resource(ResourceKey("error_actor_details_no_connection"), ResourceEnglishValue("Not connected to Internet")),
                 Comment("# This is a comment"),
-                Resource(ResourceKey("template_sample"), ResourceValue("<some random contextual text> should replace this.")),
-                Resource(ResourceKey("sample_with_quotes"), ResourceValue("hello \\\"stranger\\\"")),
-                Resource(ResourceKey("sample_with_quotes_2"), ResourceValue("hello stranger"))
+                Resource(ResourceKey("template_sample"), ResourceEnglishValue("<some random contextual text> should replace this.")),
+                Resource(ResourceKey("sample_with_quotes"), ResourceEnglishValue("hello \\\"stranger\\\"")),
+                Resource(ResourceKey("sample_with_quotes_2"), ResourceEnglishValue("hello stranger"))
             )
     }
 }

@@ -15,4 +15,4 @@
  */
 package com.gurpreetsk.internal
 
-inline class ResourceValue(val text: String)
+inline class ResourceEnglishValue(val text: String)

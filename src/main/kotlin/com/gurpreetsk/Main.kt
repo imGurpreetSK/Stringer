@@ -17,8 +17,7 @@ package com.gurpreetsk
 
 //ENTRY com.gurpreetsk.MainKt
 
-import com.gurpreetsk.formatter.AndroidFormatter
-import com.gurpreetsk.formatter.IosFormatter
+import com.gurpreetsk.formatter.*
 import com.gurpreetsk.internal.FilePath
 import com.gurpreetsk.writer.AndroidFileWriter
 import com.gurpreetsk.writer.DirectoryManager
@@ -29,17 +28,32 @@ fun main(args: Array<String>) {
     val csvPath       = FilePath("$homeDirectory/Downloads/mobile-strings.csv")
     val fileByLines   = CsvReader(csvPath).parseCsv()
 
-    val androidFileContents = AndroidFormatter().format(fileByLines)
-    val iOSFileContents     = IosFormatter().format(fileByLines)
+    val androidForeignFileContents = AndroidForeignFormatter().format(fileByLines)
+    val androidEnglishFileContents = AndroidEngFormatter().format(fileByLines)
+    val iOSFileEnglishContents     = IosEnglishFormatter().format(fileByLines)
+    val iOSFileForeignContents     = IosForeignFormatter().format(fileByLines)
 
     val destinationDirectory = "$homeDirectory/Desktop/StringerThings"
+    val foreignDestinationDirctory= "$homeDirectory/Desktop/StringerThings/foreign"
     DirectoryManager
         .createParentDirectory(destinationDirectory)
         .run {
-            AndroidFileWriter().write(this, androidFileContents)
-            IosFileWriter().write(this, iOSFileContents)
+            AndroidFileWriter().write(this, androidEnglishFileContents)
+
+            IosFileWriter().write(this, iOSFileEnglishContents)
         }
         .also {
             println("Success! Files generated in directory \"$destinationDirectory\".")
         }
+    DirectoryManager
+        .createParentDirectory(foreignDestinationDirctory)
+        .run {
+            AndroidFileWriter().write(this, androidForeignFileContents)
+            IosFileWriter().write(this, iOSFileForeignContents)
+        }
+        .also {
+            println("Success! Files generated in directory \"$foreignDestinationDirctory\".")
+        }
+
+
 }

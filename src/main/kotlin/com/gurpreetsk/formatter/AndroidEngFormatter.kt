@@ -20,20 +20,14 @@ import com.gurpreetsk.internal.Line
 import com.gurpreetsk.internal.Resource
 import com.gurpreetsk.internal.clean
 
-open abstract class IosFormatter : Formatter {
-    override fun format(rawContents: Set<Line>): String {
-        StringBuilder()
-            .apply { rawContents.forEach { line -> append(getiOSStringResource(line)) } }
-            .also { return it.toString() }
-    }
+class AndroidEngFormatter : AndroidFormatter() {
+    override fun getAndroidStringResource(line: Line): String {
 
-     abstract fun getiOSStringResource(
-        line: Line
-    ): String
+        val indentLevelInSpaces = "  "
+        return when (line) {
+            is Comment -> "\n$indentLevelInSpaces<!-- ${line.text.substring(1).trim()} -->\n"
+            is Resource -> "$indentLevelInSpaces<string name=\"${line.key.text.clean()}\">\"${line.englishValue.text.trim().convertToAndroidTemplate()}\"</string>\n"
+        }
 
-
-     fun String.convertToiOSTemplate(): String {
-        val regex = "<(.*?)>".toRegex()
-        return this.replace(regex, "%@")
     }
 }

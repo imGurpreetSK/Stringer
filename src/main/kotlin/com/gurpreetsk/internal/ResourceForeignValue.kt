@@ -15,10 +15,4 @@
  */
 package com.gurpreetsk.internal
 
-sealed class Line
-
-data class Comment(val text: String) : Line()
-
-data class Resource(val key: ResourceKey,
-                    val englishValue: ResourceEnglishValue,
-                    val foreignValue: ResourceForeignValue) : Line()
+inline class ResourceForeignValue(val text: String)
