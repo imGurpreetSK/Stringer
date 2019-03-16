@@ -57,6 +57,7 @@ class CsvReader(private val path: FilePath) {
         return set.toSet()
     }
 
+
     private fun getResourceKey(splitLine: List<String>): ResourceKey {
         val resourceText = splitLine[0].clean()
         // Generate key of pattern "type_feature_name_text", eg: error_resource_details_connection
