@@ -44,9 +44,11 @@ class CsvReader(private val path: FilePath) {
                         set.add(Comment(line))
                     } else {
                         val splitLine = line.split(",")
-                        val key   = getResourceKey(splitLine)
-                        val value = ResourceValue(splitLine[1].trim().removeBoundaryQuotes().escapeInternalQuotes())
-                        set.add(Resource(key, value))
+                        val key = getResourceKey(splitLine)
+                        val enValue =
+                            ResourceEnglishValue(splitLine[1].trim().removeBoundaryQuotes().escapeInternalQuotes())
+                        val foreignValue = ResourceForeignValue(splitLine[2].trim().removeBoundaryQuotes().escapeInternalQuotes())
+                        set.add(Resource(key, enValue, foreignValue))
                     }
                 }
             }
@@ -55,13 +57,11 @@ class CsvReader(private val path: FilePath) {
         return set.toSet()
     }
 
+
     private fun getResourceKey(splitLine: List<String>): ResourceKey {
         val resourceText = splitLine[0].clean()
-        val type         = try { splitLine[2].clean() } catch (e: IndexOutOfBoundsException) { null } // TODO(gs) 13/02/19 - Find a better way of doing this.
-        val feature      = try { splitLine[3].clean() } catch (e: IndexOutOfBoundsException) { null }
-
         // Generate key of pattern "type_feature_name_text", eg: error_resource_details_connection
-        val key     = "${if (!type.isNullOrBlank()) type + "_" else ""}${if (!feature.isNullOrBlank()) feature + "_" else ""}$resourceText"
+        val key = resourceText
         return ResourceKey(key)
     }
 

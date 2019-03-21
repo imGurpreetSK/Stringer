@@ -27,7 +27,7 @@ See [sample csv](https://github.com/GurpreetSK95/Stringer/blob/master/mobile-str
 2. Any line starting with `#` is treated as comment.
 3. A `type` and `feature` can be provided and resource key is generated accordingly for them. Eg: The generated key for `no connection, No internet connection found, ERROR, user details` will be `error_user_details_no_connection`.
 
-<b>Note</b>: Ordering matters. CSVs must be ordered as `KEY, VALUE, TYPE (optional), FEATURE NAME (optional)`
+<b>Note</b>: Ordering matters. CSVs must be ordered as `KEY, ENGLISH VALUE, FOREIGN VALUE'
 
 License
 ---------------------
